@@ -6,7 +6,7 @@ export default class Display extends React.Component {
     render() {
         return (
             <div>
-                <DisplayStyle placeholder="0" readOnly></DisplayStyle>
+                <DisplayStyle>{this.props.result}</DisplayStyle>
             </div>
         );
     }
