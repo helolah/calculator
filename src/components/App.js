@@ -2,7 +2,8 @@ import React from 'react';
 
 import Display from './Display';
 import Buttons from './Keypad';
-import { Div, Title } from './styles';
+import { Div } from './styles';
+import '../index.css';
 
 export default class App extends React.Component {
     state = {
@@ -12,26 +13,40 @@ export default class App extends React.Component {
     clickedBtn = (btnValue) => {
         if (btnValue === "=") {
             this.calculate();
+        } else {
+            this.setState({
+                result: this.state.result + btnValue
+            });
         }
 
-        this.setState({
-            result: this.state.result + btnValue
-        });
+        if (btnValue === "C") {
+            this.setState({
+                result: ""
+            });
+        }
     };
 
     calculate = () => {
-        this.setState({
-            result: eval(this.state.result)
-        });
+        try {
+            this.setState({
+                result: eval(this.state.result)
+            });
+        } catch (e) {
+            this.setState({
+                result: "Error"
+            });
+        }
     };
 
     render() {
         return (
-            <Div>
-                <Title>CALCULADORA</Title>
-                <Display result={this.state.result}></Display>
-                <Buttons clickedBtn={this.clickedBtn}></Buttons>
-            </Div>
+            <div className="container">
+                <Div>
+                    <Display result={this.state.result}></Display>
+                    <br></br>
+                    <Buttons clickedBtn={this.clickedBtn}></Buttons>
+                </Div>
+            </div>
         );
     }
 }
